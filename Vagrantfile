@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "tests/playbook.yml"
     ansible.verbose = "vvvv"
-    ansible.raw_arguments = ['--check', '--diff']
+#    ansible.raw_arguments = ['--check', '--diff']
   end
 
 #  config.vm.provision :shell, :inline => <<-END
