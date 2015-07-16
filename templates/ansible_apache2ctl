@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#{{ ansible_managed }}
+
+echo $1
+cat <<EOF > /tmp/test-apache
+# A temp config file to test Apache configuration
+ErrorLog /var/log/apache2/error_log
+Include {{ apache_conf_enabled }}
+Include {{ apache_mods_enabled }}/*.conf
+Include {{ apache_mods_enabled }}/*.load
+Include $1
+EOF
+
+apache2ctl -t -f /tmp/test-apache
+RC=$?; rm -f /tmp/test-apache 2>/dev/null; exit $RC

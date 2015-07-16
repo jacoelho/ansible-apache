@@ -15,8 +15,6 @@ apache_ssl_cipher_suite: "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA38
 apache_ssl_protocol: "-All +TLSv1 +TLSv1.1 +TLSv1.2"
 
 apache_security:
-  - Header set X-XSS-Protection "1; mode=block"
-  - Header always append X-Frame-Options SAMEORIGIN
   - ServerTokens Prod
   - ServerSignature Off
   - TraceEnable Off
@@ -33,11 +31,10 @@ apache_config: []
 
 apache_virtual_hosts:
   - address: "*:80"
-    servername: www.yourwebsite2.com
+    ServerName: www.yourwebsite2.com
     DocumentRoot: /var/www/html
-    ProxyPreserveHost: On
-    RewriteEngine: On
-    RequestHeader: add X-SSL off
+    ProxyPreserveHost: "On"
+    RewriteEngine: "On"
     RewriteRule:
       - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
       - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
@@ -46,11 +43,10 @@ apache_virtual_hosts:
         AllowOverride: "all"
         Options: "-MultiViews"
   - address: "*:80"
-    servername: www.yourwebsite.com
+    ServerName: www.yourwebsite.com
     DocumentRoot: /var/www/html
-    ProxyPreserveHost: On
-    RewriteEngine: On
-    RequestHeader: add X-SSL off
+    ProxyPreserveHost: "On"
+    RewriteEngine: "On"
     SetEnv:
       - bla ble
       - bli blu

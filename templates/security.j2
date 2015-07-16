@@ -1,9 +1,3 @@
 {% for item in apache_security %}
-{% if "Header" in item %}
-<IfModule mod_headers.c>
-  {{ item }}
-</IfModule>
-{% else %}
 {{ item }}
-{% endif %}
 {% endfor %}

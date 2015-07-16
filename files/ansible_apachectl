@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/sbin/apachectl -t
+/usr/sbin/apachectl -

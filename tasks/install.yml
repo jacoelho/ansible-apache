@@ -17,9 +17,9 @@
 
 - name: apache | configuration validator script
   become: yes
-  copy:
+  template:
     dest: /usr/sbin/ansible_apache2ctl
-    src: ansible_apachectl
+    src: ansible_apache2ctl
     owner: root
     group: root
     mode: 0755

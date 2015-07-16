@@ -4,7 +4,7 @@
   become: yes
   template:
     src:   virtualhost.j2
-    dest:  "{{ apache_vhost_enabled }}/{{ item.servername }}.conf"
+    dest:  "{{ apache_vhost_enabled }}/{{ item.ServerName }}.conf"
     owner: "{{ apache_user }}"
     group: "{{ apache_group }}"
     mode:  0644
