@@ -1,0 +1,46 @@
+---
+
+- name: apache | configure apache
+  become: yes
+  template:
+    src: apache.j2
+    dest: "{{ apache_directory }}/apache2.conf"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+    validate: 'apachectl -t -f %s'
+  notify: restart apache
+
+- name: apache | configure listen
+  become: yes
+  template:
+    src: listen.j2
+    dest: "{{ apache_directory }}/ports.conf"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+    validate: 'ansible_apache2ctl %s'
+  notify: restart apache
+
+- name: apache | configure ssl
+  become: yes
+  template:
+    src: ssl.j2
+    dest: "{{ apache_conf_available }}/ssl.conf"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+    validate: 'ansible_apache2ctl %s'
+  notify: restart apache
+
+- name: apache | configure security
+  become: yes
+  template:
+    src: security.j2
+    dest: "{{ apache_conf_available }}/security.conf"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+    validate: 'ansible_apache2ctl %s'
+  notify: restart apache
+

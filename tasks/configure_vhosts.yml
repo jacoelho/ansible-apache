@@ -1,0 +1,15 @@
+---
+
+- name: apache | configure vhosts
+  become: yes
+  template:
+    src:   virtualhost.j2
+    dest:  "{{ apache_vhost_enabled }}/{{ item.servername }}.conf"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+    validate: 'ansible_apache2ctl %s'
+  with_items: apache_virtual_hosts
+  notify: restart apache
+
+

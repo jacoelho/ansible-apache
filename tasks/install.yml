@@ -1,14 +1,26 @@
 ---
 
 - name: apache | install
+  become: yes
   apt:
     name: apache2
     state: present
     update_cache: yes
     cache_valid_time: 3600
 
-- name: passenger - enable ssl mod
+- name: apache | enable modules
+  become: yes
   apache2_module:
     name: "{{ item }}"
     state: present
   with_items: apache_modules
+
+- name: apache | configuration validator script
+  become: yes
+  copy:
+    dest: /usr/sbin/ansible_apache2ctl
+    src: ansible_apachectl
+    owner: root
+    group: root
+    mode: 0755
+

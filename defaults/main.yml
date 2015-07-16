@@ -3,12 +3,19 @@
 apache_user: root
 apache_group: www-data
 
-apache_vhost_available: /etc/apache2/sites-available
-apache_vhost_enabled: /etc/apache2/sites-enabled
-apache_mods_enabled: /etc/apache2/mods-enabled
-apache_conf_enabled: /etc/apache2/conf-enabled
+apache_directory: /etc/apache2/
+apache_vhost_available: "{{ apache_directory }}/sites-available"
+apache_vhost_enabled: "{{ apache_directory }}/sites-enabled"
+apache_mods_enabled: "{{ apache_directory }}/mods-enabled"
+apache_conf_enabled: "{{ apache_directory }}/conf-enabled"
+apache_conf_available: "{{ apache_directory }}/conf-available"
+
+apache_ssl_cipher_suite: "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+AESGCM EECDH EDH+AESGCM EDH+aRSA HIGH !MEDIUM !LOW !aNULL !eNULL !LOW !RC4 !MD5 !EXP !PSK !SRP !DSS"
+
+apache_ssl_protocol: "-All +TLSv1 +TLSv1.1 +TLSv1.2"
 
 apache_security:
+  - Header set X-XSS-Protection "1; mode=block"
   - Header always append X-Frame-Options SAMEORIGIN
   - ServerTokens Prod
   - ServerSignature Off
@@ -18,12 +25,11 @@ apache_modules:
   - rewrite
   - ssl
 
-apache_config:
-  - PassengerDefaultRuby /usr/bin/ruby1.8
-  - PassengerPython /usr/bin/python2.6
-  - PassengerNodejs /usr/bin/node;
-  - PassengerMaxPoolSize 15
-  - PassengerPoolIdleTime 10
+apache_listen:
+  - 80
+  - 443
+
+apache_config: []
 
 apache_virtual_hosts:
   - address: "*:80"

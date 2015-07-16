@@ -1,3 +1,5 @@
+# Managed by Ansible
+
 Mutex file:${APACHE_LOCK_DIR} default
 PidFile ${APACHE_PID_FILE}
 
@@ -11,11 +13,10 @@ Group ${APACHE_RUN_GROUP}
 
 HostnameLookups Off
 
-
-IncludeOptional mods-enabled/*.load
-IncludeOptional mods-enabled/*.conf
-IncludeOptional conf-enabled/*.conf
-IncludeOptional sites-enabled/*.conf
+IncludeOptional {{ apache_mods_enabled }}/*.load
+IncludeOptional {{ apache_mods_enabled }}/*.conf
+IncludeOptional {{ apache_conf_enabled }}/*.conf
+IncludeOptional {{ apache_vhost_enabled }}/*.conf
 Include ports.conf
 
 <Directory />
@@ -48,3 +49,7 @@ LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combine
 LogFormat "%h %l %u %t \"%r\" %>s %O" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
+
+{% for config in apache_config %}
+{{ config }}
+{% endfor %}

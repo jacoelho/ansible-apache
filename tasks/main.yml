@@ -1,4 +1,5 @@
 ---
 
 - include: install.yml
-- include: configure.yml
+- include: configure_apache.yml
+- include: configure_vhosts.yml
