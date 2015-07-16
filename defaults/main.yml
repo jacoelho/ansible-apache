@@ -29,43 +29,4 @@ apache_listen:
 
 apache_config: []
 
-apache_virtual_hosts:
-  - address: "*:80"
-    ServerName: www.yourwebsite2.com
-    DocumentRoot: /var/www/html
-    ProxyPreserveHost: "On"
-    RewriteEngine: "On"
-    RewriteRule:
-      - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
-      - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
-    Directory:
-      - path: /var/www/html/helloapp/public
-        AllowOverride: "all"
-        Options: "-MultiViews"
-  - address: "*:80"
-    ServerName: www.yourwebsite.com
-    DocumentRoot: /var/www/html
-    ProxyPreserveHost: "On"
-    RewriteEngine: "On"
-    SetEnv:
-      - bla ble
-      - bli blu
-    RewriteRule:
-      - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
-      - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
-    Directory:
-      - path: /var/www/html/helloapp/public
-        AllowOverride: "all"
-        Options: "-MultiViews"
-    Files:
-      - path: "mypaths.shtml"
-        Options: "+Includes"
-        SetOutputFilter: "INCLUDES"
-        AcceptPathInfo: "On"
-    Proxy:
-      - path: balancer://jbosscluster
-        BalancerMember:
-          - http://server01.myorg.com:8080
-          - http://server02.myorg.com:8080
-        ProxySet: lbmethod=byrequests
-
+apache_virtual_hosts: []

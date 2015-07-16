@@ -7,13 +7,24 @@
   {{ key }} {{ rule }}
 {% endfor %}
 {% elif key == 'Proxy' %}
-{% include "proxy.j2" %}
+{% for proxy in value %}
+<Proxy {{ proxy.path }}>
+{% for member in proxy.BalancerMember %}
+  BalancerMember {{ member }}
+{% endfor %}
+{% for key, value in proxy.iteritems() %}
+{% if key not in ['path', 'BalancerMember'] %}
+  {{ key }} {{ value }}
+{% endif %}
+{% endfor %}
+</Proxy>
+{% endfor %}
 {% elif key in ['Directory', 'Files', 'FilesMatch' ] %}
 {% for block in value %}
   <{{ key }} "{{ block["path"] }}">
 {% for key, value in block.iteritems() %}
 {% if not key == "path" %}
-      {{ key }} {{ value }}
+      {{ key }} {{ value }}
 {% endif %}
 {% endfor %}
   </{{ key }}>
