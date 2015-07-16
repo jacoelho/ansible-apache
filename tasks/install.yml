@@ -1,0 +1,14 @@
+---
+
+- name: apache | install
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: passenger - enable ssl mod
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items: apache_modules

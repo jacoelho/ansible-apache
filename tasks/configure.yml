@@ -1,0 +1,11 @@
+---
+
+- name: apache | configure
+  template:
+    src:   virtualhost.j2
+    dest:  "/tmp/apache-{{ item.servername }}"
+    owner: "root"
+    group: "root"
+    mode:  0600
+  with_items: apache_virtual_hosts
+

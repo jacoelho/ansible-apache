@@ -1,0 +1,24 @@
+{% set vhost = item %}
+<VirtualHost {{ vhost["address"] }}>
+{% for key, value in vhost.iteritems() %}
+{% set key = ( key | lower ) %}
+{% if key == 'address' %}
+{% elif key in [ 'rewriterule', 'browsermatch' ] %}
+{% for rule in value %}
+  {{ key }} {{ rule }}
+{% endfor %}
+{% elif key in ['directory', 'files' ] %}
+{% for block in value %}
+  <{{ key }} {{ block["path"] }}>
+{% for key, value in block.iteritems() %}
+{% if not key == "path" %}
+      {{ key }} {{ value }}
+{% endif %}
+{% endfor %}
+  </{{ key }}>
+{% endfor %}
+{% else %}
+  {{ key }} {{ value }}
+{% endif %}
+{% endfor %}
+</VirtualHost>

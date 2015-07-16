@@ -1,0 +1,40 @@
+---
+
+apache_modules:
+  - rewrite
+  - ssl
+
+apache_config:
+
+apache_virtual_hosts:
+  - address: "*:80"
+    servername: www.yourwebsite2.com
+    DocumentRoot: /var/www/html
+    ProxyPreserveHost: On
+    RewriteEngine: On
+    RequestHeader: add X-SSL off
+    RewriteRule:
+      - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
+      - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
+    Directory:
+      - path: /var/www/html/helloapp/public
+        AllowOverride: "all"
+        Options: "-MultiViews"
+  - address: "*:80"
+    servername: www.yourwebsite.com
+    DocumentRoot: /var/www/html
+    ProxyPreserveHost: On
+    RewriteEngine: On
+    RequestHeader: add X-SSL off
+    RewriteRule:
+      - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
+      - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
+    Directory:
+      - path: /var/www/html/helloapp/public
+        AllowOverride: "all"
+        Options: "-MultiViews"
+    Files:
+      - path: "mypaths.shtml"
+        Options: "+Includes"
+        SetOutputFilter: "INCLUDES"
+        AcceptPathInfo: "On"
