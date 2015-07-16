@@ -1,15 +1,16 @@
 {% set vhost = item %}
 <VirtualHost {{ vhost["address"] }}>
 {% for key, value in vhost.iteritems() %}
-{% set key = ( key | lower ) %}
 {% if key == 'address' %}
-{% elif key in [ 'rewriterule', 'browsermatch' ] %}
+{% elif key in [ 'RewriteRule', 'BrowserMatch', 'SetEnv' ] %}
 {% for rule in value %}
   {{ key }} {{ rule }}
 {% endfor %}
-{% elif key in ['directory', 'files' ] %}
+{% elif key == 'Proxy' %}
+{% include "proxy.j2" %}
+{% elif key in ['Directory', 'Files', 'FilesMatch' ] %}
 {% for block in value %}
-  <{{ key }} {{ block["path"] }}>
+  <{{ key }} "{{ block["path"] }}">
 {% for key, value in block.iteritems() %}
 {% if not key == "path" %}
       {{ key }} {{ value }}

@@ -1,0 +1,13 @@
+{% set proxy_list = l_value %}
+{% for proxy in proxy_list %}
+<Proxy {{ proxy.path }}>
+{% for member in proxy.BalancerMember %}
+  BalancerMember {{ member }}
+{% endfor %}
+{% for key, value in proxy.iteritems() %}
+{% if key not in ['path', 'BalancerMember'] %}
+  {{ key }} {{ value }}
+{% endif %}
+{% endfor %}
+</Proxy>
+{% endfor %}

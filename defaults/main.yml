@@ -5,6 +5,11 @@ apache_modules:
   - ssl
 
 apache_config:
+  - PassengerDefaultRuby /usr/bin/ruby1.8
+  - PassengerPython /usr/bin/python2.6
+  - PassengerNodejs /usr/bin/node;
+  - PassengerMaxPoolSize 15
+  - PassengerPoolIdleTime 10
 
 apache_virtual_hosts:
   - address: "*:80"
@@ -26,6 +31,9 @@ apache_virtual_hosts:
     ProxyPreserveHost: On
     RewriteEngine: On
     RequestHeader: add X-SSL off
+    SetEnv:
+      - bla ble
+      - bli blu
     RewriteRule:
       - "^/app1/(.*) http://127.0.0.1/app1/$1 [P,L]"
       - "^/app2/(.*) http://127.0.0.2/app2/$1 [P,L]"
@@ -38,3 +46,10 @@ apache_virtual_hosts:
         Options: "+Includes"
         SetOutputFilter: "INCLUDES"
         AcceptPathInfo: "On"
+    Proxy:
+      - path: balancer://jbosscluster
+        BalancerMember:
+          - http://server01.myorg.com:8080
+          - http://server02.myorg.com:8080
+        ProxySet: lbmethod=byrequests
+
