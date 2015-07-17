@@ -52,4 +52,4 @@
     owner: "{{ apache_user }}"
     group: "{{ apache_group }}"
     mode:  0644
-  with_items: apache_basic_auth_files
+  with_items: apache_basic_auth_files.keys()
