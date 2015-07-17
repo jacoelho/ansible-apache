@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#{{ ansible_managed }}
+# Managed by ansible, do not edit!
 
 cat <<EOF > /tmp/test-apache
 # A temp config file to test Apache configuration
