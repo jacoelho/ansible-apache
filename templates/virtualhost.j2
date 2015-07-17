@@ -21,7 +21,7 @@
 {% endfor %}
 </Proxy>
 {% endfor %}
-{% elif key in ['Directory', 'Files', 'FilesMatch' ] %}
+{% elif key in ['Directory', 'Files', 'FilesMatch', 'Location' ] %}
 {% for block in value %}
   <{{ key }} "{{ block["path"] }}">
 {% for key, value in block.iteritems() %}
