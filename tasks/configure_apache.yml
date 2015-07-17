@@ -44,6 +44,16 @@
     validate: 'ansible_apache2ctl %s'
   notify: restart apache
 
+- name: apache | create basic auth directories
+  become: yes
+  file:
+    path:  "{{ apache_directory }}/{{ item | dirname }}"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0755
+    state: directory
+  with_items: apache_basic_auth_files.keys()
+
 - name: apache | copy basic auth files
   become: yes
   template:
