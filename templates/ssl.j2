@@ -1,3 +1,5 @@
+# Managed by ansible, do not edit!
+
 <IfModule mod_ssl.c>
 
   SSLRandomSeed startup builtin
@@ -14,9 +16,14 @@
   SSLSessionCache   shmcb:${APACHE_RUN_DIR}/ssl_scache(512000)
   SSLSessionCacheTimeout  300
 
-  SSLHonorCipherOrder on
+  SSLHonorCipherOrder On
   SSLCipherSuite "{{ apache_ssl_cipher_suite }}"
   SSLProtocol {{ apache_ssl_protocol }}
+
+  # OCSP Stapling, only in httpd 2.3.3 and later
+  SSLUseStapling On
+  SSLStaplingResponderTimeout 5
+  SSLStaplingReturnResponderErrors off
 
   #Prevent CRIME/BREACH compression attacks
   SSLCompression Off
