@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #{{ ansible_managed }}
 
-echo $1
 cat <<EOF > /tmp/test-apache
 # A temp config file to test Apache configuration
 ErrorLog /var/log/apache2/error_log
