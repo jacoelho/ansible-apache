@@ -27,6 +27,8 @@ apache_listen:
   - 80
   - 443
 
+apache_basic_auth_files: []
+
 apache_config: []
 
 apache_virtual_hosts: []

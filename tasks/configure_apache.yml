@@ -44,3 +44,12 @@
     validate: 'ansible_apache2ctl %s'
   notify: restart apache
 
+- name: apache | copy basic auth files
+  become: yes
+  template:
+    src:   basic_auth.j2
+    dest:  "{{ apache_directory }}/{{ item }}"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    mode:  0644
+  with_items: apache_basic_auth_files
